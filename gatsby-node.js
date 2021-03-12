@@ -2,6 +2,13 @@ const _ = require('lodash')
 const path = require('path')
 const { createFilePath } = require('gatsby-source-filesystem')
 const { fmImagesToRelative } = require('gatsby-remark-relative-images')
+const { registerLocalFs } = require('netlify-cms-proxy-server/dist/middlewares');
+
+// 开启本地netlify 后台
+// https://vrabe.tw/blog/use-netlify-cms-in-local-machine/
+exports.onCreateDevServer = async ({ app }) => {
+  await registerLocalFs(app);
+};
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
