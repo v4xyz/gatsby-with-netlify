@@ -2,13 +2,21 @@ const _ = require('lodash')
 const path = require('path')
 const { createFilePath } = require('gatsby-source-filesystem')
 const { fmImagesToRelative } = require('gatsby-remark-relative-images')
-const { registerLocalFs } = require('netlify-cms-proxy-server/dist/middlewares');
+const { registerLocalFs, registerLocalGit } = require('netlify-cms-proxy-server/dist/middlewares');
 
-// 开启本地netlify 后台
+// // 开启本地netlify 后台 file 模式
+// // https://vrabe.tw/blog/use-netlify-cms-in-local-machine/
+// exports.onCreateDevServer = async ({ app }) => {
+//   await registerLocalFs(app);
+// };
+
+// 开启本地netlify 后台 git 模式
+process.env.MODE = 'git'
 // https://vrabe.tw/blog/use-netlify-cms-in-local-machine/
 exports.onCreateDevServer = async ({ app }) => {
-  await registerLocalFs(app);
+  await registerLocalGit(app);
 };
+
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
